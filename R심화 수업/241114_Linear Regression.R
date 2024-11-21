@@ -2,17 +2,16 @@
 install.packages("mlbench")
 install.packages("car")
 install.packages("leaps")
-library(mlbench)
 library(car)
-library(leaps)
 
 
-# 데이터셋 개요 보기
+
+## 데이터셋 개요 보기
 data("BostonHousing")
 head(BostonHousing)   # medv 칼럼이 종속변수
 
 
-# 회귀분석 lm
+## 회귀분석 lm ----------------------------------------------------------------
   # lm(종속변수 ~ 독립변수1 + 독립변수2 + ..., data=데이터셋)
   # 종속변수를 제외한 모든 칼럼을 독립변수로 사용할 경우
   # lm(종속변수 ~ .)
@@ -20,13 +19,13 @@ model <- lm(medv ~ ., data=BostonHousing)
 model
 
 
-# vif 계산
+## vif 계산
 vif(model)
   # 결과값이 4보다 작으면 다중공선성 이슈가 없는 것.
   # nox 변수가 4.39로 다중공선성이 있다.
 
 
-# 다중공선성이 없는 변수들만 선택해서 다시 회귀분석
+## 다중공선성이 없는 변수들만 선택해서 다시 회귀분석---------------------------
 model2 <- lm(medv ~ crim+zn+chas+rm+age+ptratio+b+lstat, data=BostonHousing)
 model2
   # 결과로 나오는 숫자들은 β값.
@@ -53,7 +52,9 @@ model3
 # model3가 최종 모형.
 
 
-# 변수 선택 -------------------------------------------------------------------
+## 변수 선택 -------------------------------------------------------------------
+library(mlbench)
+library(leaps)
   # 변수 선택 함수를 사용하면 위의 절차를 거치지 않아도 된다.
 
 # 1. 단계적방법(stepwise selection)
